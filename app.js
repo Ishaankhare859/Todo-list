@@ -41,8 +41,12 @@ app.get('/:customName',function(req, res){
             name:customName,
             items: ListItems
         });
-        list.save();
-              res.redirect("/" + customName); 
+        list.save(function(err){
+
+            if (!err){
+                res.redirect("/" + customName);           
+            }
+        });
            }
             else
             {
@@ -101,15 +105,30 @@ app.post("/",function (req, res){
         name: item
     });
     if(name === "Today"){
-        taskx.save();
-        res.redirect("/");
+        taskx.save(function(err){
+
+            if (!err){
+          
+              res.redirect("/");
+          
+            }
+          
+          });
     }
     else{
         List.findOne({name: name}, function(err, foundlist){
             foundlist.items.push(taskx);
-            foundlist.save();
-            
+            foundlist.save(function(err){
+
+                if (!err){
+              
+                  
             res.redirect('/' + name);
+              
+                }
+              
+              });
+         
         });
     }
 
@@ -125,7 +144,7 @@ app.get("/work", function(req,res){
     });
 
     
-        app.listen(3000);
+        app.listen(2023);
         //console.log(client);   
    
 
